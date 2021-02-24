@@ -52,6 +52,7 @@ namespace xyz.lsyyyVerification
 			{
 				endpoints.MapGrpcService<UserService>();
 				endpoints.MapGrpcService<VerificationService>();
+				endpoints.MapGrpcService<ActionService>();
 				endpoints.MapControllers();
 			});
 		}
