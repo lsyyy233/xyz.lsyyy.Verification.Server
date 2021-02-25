@@ -36,6 +36,9 @@ namespace xyz.lsyyyVerification
 					.UseLazyLoadingProxies()
 					.UseMySql(Configuration.GetConnectionString("DefaultDataBase"));
 			});
+			services
+				.AddSingleton<MemoryActionTagService>()
+				.AddScoped<ActionTagService>();
 			services.AddLogging();
 			services.AddGrpc();
 		}
@@ -50,9 +53,9 @@ namespace xyz.lsyyyVerification
 
 			app.UseEndpoints(endpoints =>
 			{
-				endpoints.MapGrpcService<UserService>();
+				endpoints.MapGrpcService<GrpcUserService>();
 				endpoints.MapGrpcService<VerificationService>();
-				endpoints.MapGrpcService<ActionService>();
+				endpoints.MapGrpcService<GrpcActionService>();
 				endpoints.MapControllers();
 			});
 		}

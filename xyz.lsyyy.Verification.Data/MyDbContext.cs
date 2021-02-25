@@ -7,7 +7,7 @@ namespace xyz.lsyyy.Verification.Data
 		public MyDbContext(DbContextOptions<MyDbContext> options) : base(options)
 		{
 		}
-		public DbSet<Action> Actions { get; set; }
+		public DbSet<ActionTag> ActionTags { get; set; }
 
 		public DbSet<User> Users { get; set; }
 

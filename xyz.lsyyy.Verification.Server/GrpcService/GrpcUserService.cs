@@ -10,10 +10,10 @@ namespace xyz.lsyyy.Verification
 	/// <summary>
 	/// GRPC服务端
 	/// </summary>
-	public class UserService : Protos.User.UserBase
+	public class GrpcUserService : Protos.User.UserBase
 	{
 		private readonly MyDbContext db;
-		public UserService(MyDbContext db)
+		public GrpcUserService(MyDbContext db)
 		{
 			this.db = db;
 		}

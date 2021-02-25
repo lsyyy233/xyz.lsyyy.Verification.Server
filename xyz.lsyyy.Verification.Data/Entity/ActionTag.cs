@@ -5,12 +5,14 @@ namespace xyz.lsyyy.Verification.Data
 	/// <summary>
 	/// action
 	/// </summary>
-	public class Action
+	public class ActionTag
 	{
 		public Guid Id { get; set; }
 
 		public string ControllerName { get; set; }
 
 		public string ActionName { get; set; }
+
+		public string TagName { get; set; }
 	}
 }

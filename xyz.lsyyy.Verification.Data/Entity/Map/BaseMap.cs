@@ -6,6 +6,6 @@ namespace xyz.lsyyy.Verification.Data
 	{
 		public Guid ActionId { get; set; }
 
-		public virtual Action Action { get; set; }
+		public virtual ActionTag ActionTag { get; set; }
 	}
 }
