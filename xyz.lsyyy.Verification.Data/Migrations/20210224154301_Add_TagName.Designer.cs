@@ -60,7 +60,7 @@ namespace xyz.lsyyy.Verification.Data.Migrations
 
             modelBuilder.Entity("xyz.lsyyy.Verification.Data.DepartmentActionMap", b =>
                 {
-                    b.Property<Guid>("ActionId")
+                    b.Property<Guid>("ActionTagId")
                         .HasColumnType("char(36)");
 
                     b.Property<Guid?>("ActionTagId")
@@ -69,7 +69,7 @@ namespace xyz.lsyyy.Verification.Data.Migrations
                     b.Property<Guid>("DepartmentId")
                         .HasColumnType("char(36)");
 
-                    b.HasIndex("ActionId");
+                    b.HasIndex("ActionTagId");
 
                     b.HasIndex("ActionTagId");
 
@@ -104,7 +104,7 @@ namespace xyz.lsyyy.Verification.Data.Migrations
 
             modelBuilder.Entity("xyz.lsyyy.Verification.Data.PositionActionMap", b =>
                 {
-                    b.Property<Guid>("ActionId")
+                    b.Property<Guid>("ActionTagId")
                         .HasColumnType("char(36)");
 
                     b.Property<Guid?>("ActionTagId")
@@ -113,7 +113,7 @@ namespace xyz.lsyyy.Verification.Data.Migrations
                     b.Property<Guid>("PositionId")
                         .HasColumnType("char(36)");
 
-                    b.HasIndex("ActionId");
+                    b.HasIndex("ActionTagId");
 
                     b.HasIndex("ActionTagId");
 
@@ -146,7 +146,7 @@ namespace xyz.lsyyy.Verification.Data.Migrations
 
             modelBuilder.Entity("xyz.lsyyy.Verification.Data.UserActionMap", b =>
                 {
-                    b.Property<Guid>("ActionId")
+                    b.Property<Guid>("ActionTagId")
                         .HasColumnType("char(36)");
 
                     b.Property<Guid?>("ActionTagId")
@@ -155,7 +155,7 @@ namespace xyz.lsyyy.Verification.Data.Migrations
                     b.Property<Guid>("UserId")
                         .HasColumnType("char(36)");
 
-                    b.HasIndex("ActionId");
+                    b.HasIndex("ActionTagId");
 
                     b.HasIndex("ActionTagId");
 

@@ -20,7 +20,7 @@ namespace xyz.lsyyy.Verification.Data
 		/// <summary>
 		/// 所属职位Id
 		/// </summary>
-		public Guid PositionId { get; set; }
+		public Guid? PositionId { get; set; }
 
 		/// <summary>
 		/// 所属职位

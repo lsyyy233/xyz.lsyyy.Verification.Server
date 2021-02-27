@@ -58,16 +58,11 @@ namespace xyz.lsyyy.Verification.Data.Migrations
 
             modelBuilder.Entity("xyz.lsyyy.Verification.Data.DepartmentActionMap", b =>
                 {
-                    b.Property<Guid>("ActionId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid?>("ActionTagId")
+                    b.Property<Guid>("ActionTagId")
                         .HasColumnType("char(36)");
 
                     b.Property<Guid>("DepartmentId")
                         .HasColumnType("char(36)");
-
-                    b.HasIndex("ActionId");
 
                     b.HasIndex("ActionTagId");
 
@@ -102,16 +97,11 @@ namespace xyz.lsyyy.Verification.Data.Migrations
 
             modelBuilder.Entity("xyz.lsyyy.Verification.Data.PositionActionMap", b =>
                 {
-                    b.Property<Guid>("ActionId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid?>("ActionTagId")
+                    b.Property<Guid>("ActionTagId")
                         .HasColumnType("char(36)");
 
                     b.Property<Guid>("PositionId")
                         .HasColumnType("char(36)");
-
-                    b.HasIndex("ActionId");
 
                     b.HasIndex("ActionTagId");
 
@@ -132,7 +122,7 @@ namespace xyz.lsyyy.Verification.Data.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<Guid>("PositionId")
+                    b.Property<Guid?>("PositionId")
                         .HasColumnType("char(36)");
 
                     b.HasKey("Id");
@@ -144,16 +134,14 @@ namespace xyz.lsyyy.Verification.Data.Migrations
 
             modelBuilder.Entity("xyz.lsyyy.Verification.Data.UserActionMap", b =>
                 {
-                    b.Property<Guid>("ActionId")
-                        .HasColumnType("char(36)");
+                    b.Property<int>("AccessType")
+                        .HasColumnType("int");
 
-                    b.Property<Guid?>("ActionTagId")
+                    b.Property<Guid>("ActionTagId")
                         .HasColumnType("char(36)");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("char(36)");
-
-                    b.HasIndex("ActionId");
 
                     b.HasIndex("ActionTagId");
 
@@ -173,7 +161,9 @@ namespace xyz.lsyyy.Verification.Data.Migrations
                 {
                     b.HasOne("xyz.lsyyy.Verification.Data.ActionTag", "ActionTag")
                         .WithMany()
-                        .HasForeignKey("ActionTagId");
+                        .HasForeignKey("ActionTagId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("xyz.lsyyy.Verification.Data.Department", "Department")
                         .WithMany()
@@ -199,7 +189,9 @@ namespace xyz.lsyyy.Verification.Data.Migrations
                 {
                     b.HasOne("xyz.lsyyy.Verification.Data.ActionTag", "ActionTag")
                         .WithMany()
-                        .HasForeignKey("ActionTagId");
+                        .HasForeignKey("ActionTagId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("xyz.lsyyy.Verification.Data.Position", "Position")
                         .WithMany()
@@ -212,16 +204,16 @@ namespace xyz.lsyyy.Verification.Data.Migrations
                 {
                     b.HasOne("xyz.lsyyy.Verification.Data.Position", "Position")
                         .WithMany()
-                        .HasForeignKey("PositionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PositionId");
                 });
 
             modelBuilder.Entity("xyz.lsyyy.Verification.Data.UserActionMap", b =>
                 {
                     b.HasOne("xyz.lsyyy.Verification.Data.ActionTag", "ActionTag")
                         .WithMany()
-                        .HasForeignKey("ActionTagId");
+                        .HasForeignKey("ActionTagId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("xyz.lsyyy.Verification.Data.User", "User")
                         .WithMany()

@@ -148,7 +148,7 @@ namespace xyz.lsyyy.Verification.Data.Migrations
             migrationBuilder.AddForeignKey(
                 name: "FK_DepartmentActionMaps_Actions_ActionId",
                 table: "DepartmentActionMaps",
-                column: "ActionId",
+                column: "ActionTagId",
                 principalTable: "Actions",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
@@ -156,7 +156,7 @@ namespace xyz.lsyyy.Verification.Data.Migrations
             migrationBuilder.AddForeignKey(
                 name: "FK_PositionActionMaps_Actions_ActionId",
                 table: "PositionActionMaps",
-                column: "ActionId",
+                column: "ActionTagId",
                 principalTable: "Actions",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
@@ -164,7 +164,7 @@ namespace xyz.lsyyy.Verification.Data.Migrations
             migrationBuilder.AddForeignKey(
                 name: "FK_UserActionMaps_Actions_ActionId",
                 table: "UserActionMaps",
-                column: "ActionId",
+                column: "ActionTagId",
                 principalTable: "Actions",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);

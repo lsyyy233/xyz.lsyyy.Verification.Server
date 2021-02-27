@@ -25,16 +25,15 @@ namespace xyz.lsyyy.Verification.Data
 		{
 			modelBuilder.Entity<PositionActionMap>().HasNoKey();
 			modelBuilder.Entity<PositionActionMap>().HasIndex(x => x.PositionId);
-			modelBuilder.Entity<PositionActionMap>().HasIndex(x => x.ActionId);
+			modelBuilder.Entity<PositionActionMap>().HasIndex(x => x.ActionTagId);
 
 			modelBuilder.Entity<DepartmentActionMap>().HasNoKey();
 			modelBuilder.Entity<DepartmentActionMap>().HasIndex(x => x.DepartmentId);
-			modelBuilder.Entity<DepartmentActionMap>().HasIndex(x => x.ActionId);
+			modelBuilder.Entity<DepartmentActionMap>().HasIndex(x => x.ActionTagId);
 
 			modelBuilder.Entity<UserActionMap>().HasNoKey();
 			modelBuilder.Entity<UserActionMap>().HasIndex(x => x.UserId);
-			modelBuilder.Entity<UserActionMap>().HasIndex(x => x.ActionId);
-
+			modelBuilder.Entity<UserActionMap>().HasIndex(x => x.ActionTagId);
 			base.OnModelCreating(modelBuilder);
 		}
 	}

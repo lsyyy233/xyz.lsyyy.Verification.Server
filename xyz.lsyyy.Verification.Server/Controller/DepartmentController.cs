@@ -17,6 +17,11 @@ namespace xyz.lsyyy.Verification.Controller
 			this.db = db;
 		}
 
+		/// <summary>
+		/// 添加部门
+		/// </summary>
+		/// <param name="model"></param>
+		/// <returns></returns>
 		[HttpPost]
 		public async Task<object> AddDepartmentAsync(DepartmentAddModel model)
 		{

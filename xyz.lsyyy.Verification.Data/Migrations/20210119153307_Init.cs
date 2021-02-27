@@ -148,7 +148,7 @@ namespace xyz.lsyyy.Verification.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_DepartmentActionMaps_ActionId",
                 table: "DepartmentActionMaps",
-                column: "ActionId");
+                column: "ActionTagId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DepartmentActionMaps_DepartmentId",
@@ -163,7 +163,7 @@ namespace xyz.lsyyy.Verification.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_PositionActionMaps_ActionId",
                 table: "PositionActionMaps",
-                column: "ActionId");
+                column: "ActionTagId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PositionActionMaps_PositionId",
@@ -178,7 +178,7 @@ namespace xyz.lsyyy.Verification.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_UserActionMaps_ActionId",
                 table: "UserActionMaps",
-                column: "ActionId");
+                column: "ActionTagId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserActionMaps_UserId",

@@ -4,6 +4,11 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>F:\Workspace\visual_studio_workspace\xyz.lsyyy.Verification.Server\xyz.lsyyy.Verification.Server\xyz.lsyyy.Verification.xml</DocumentationFile>
+    <NoWarn>1701;1702;1591</NoWarn>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Grpc.AspNetCore" Version="2.35.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.12" />
@@ -21,7 +26,9 @@
     <PackageReference Include="NLog" Version="4.7.7" />
     <PackageReference Include="NLog.Extensions.Logging" Version="1.7.0" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.2.4" />
-    <PackageReference Include="xyz.lsyyy.Verification.Protos" Version="0.1.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.0.7" />
+    <PackageReference Include="xyz.lsyyy.Verification.Protos" Version="0.3.1" />
+    <PackageReference Include="xyz.lsyyy.Verification.Util" Version="0.0.5" />
   </ItemGroup>
 
   <ItemGroup>

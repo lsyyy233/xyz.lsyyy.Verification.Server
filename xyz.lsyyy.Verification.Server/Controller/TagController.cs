@@ -20,6 +20,39 @@ namespace xyz.lsyyy.Verification.Controller
 			this.tagService = tagService;
 		}
 
+		/// <summary>
+		/// 添加Tag
+		/// </summary>
+		/// <param name="model"></param>
+		/// <returns></returns>
+		[HttpPost]
+		public async Task<object> AddTag([FromBody] ActionTagModel model)
+		{
+			if (string.IsNullOrWhiteSpace(model.ActionName))
+			{
+				return StatusCode(400, "ActionName不能为空");
+			}
+			if (string.IsNullOrWhiteSpace(model.ControllerName))
+			{
+				return StatusCode(400, "ControllerName不能为空");
+			}
+			if (string.IsNullOrWhiteSpace(model.Tag))
+			{
+				return StatusCode(400, "Tag不能为空");
+			}
+
+			string result = await tagService.AddTagAsync(model);
+			if (string.IsNullOrWhiteSpace(result))
+			{
+				return Ok();
+			}
+			return BadRequest(result);
+		}
+
+		/// <summary>
+		/// 获取Tag状态
+		/// </summary>
+		/// <returns></returns>
 		[HttpGet("status")]
 		public async Task<object> GetTagStatus()
 		{

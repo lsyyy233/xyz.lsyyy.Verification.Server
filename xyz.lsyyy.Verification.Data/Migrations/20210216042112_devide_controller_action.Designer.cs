@@ -56,13 +56,13 @@ namespace xyz.lsyyy.Verification.Data.Migrations
 
             modelBuilder.Entity("zyx.lsyyy.Verification.Data.DepartmentActionMap", b =>
                 {
-                    b.Property<Guid>("ActionId")
+                    b.Property<Guid>("ActionTagId")
                         .HasColumnType("char(36)");
 
                     b.Property<Guid>("DepartmentId")
                         .HasColumnType("char(36)");
 
-                    b.HasIndex("ActionId");
+                    b.HasIndex("ActionTagId");
 
                     b.HasIndex("DepartmentId");
 
@@ -90,13 +90,13 @@ namespace xyz.lsyyy.Verification.Data.Migrations
 
             modelBuilder.Entity("zyx.lsyyy.Verification.Data.PositionActionMap", b =>
                 {
-                    b.Property<Guid>("ActionId")
+                    b.Property<Guid>("ActionTagId")
                         .HasColumnType("char(36)");
 
                     b.Property<Guid>("PositionId")
                         .HasColumnType("char(36)");
 
-                    b.HasIndex("ActionId");
+                    b.HasIndex("ActionTagId");
 
                     b.HasIndex("PositionId");
 
@@ -124,13 +124,13 @@ namespace xyz.lsyyy.Verification.Data.Migrations
 
             modelBuilder.Entity("zyx.lsyyy.Verification.Data.UserActionMap", b =>
                 {
-                    b.Property<Guid>("ActionId")
+                    b.Property<Guid>("ActionTagId")
                         .HasColumnType("char(36)");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("char(36)");
 
-                    b.HasIndex("ActionId");
+                    b.HasIndex("ActionTagId");
 
                     b.HasIndex("UserId");
 
@@ -148,7 +148,7 @@ namespace xyz.lsyyy.Verification.Data.Migrations
                 {
                     b.HasOne("zyx.lsyyy.Verification.Data.Action", "Action")
                         .WithMany()
-                        .HasForeignKey("ActionId")
+                        .HasForeignKey("ActionTagId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -172,7 +172,7 @@ namespace xyz.lsyyy.Verification.Data.Migrations
                 {
                     b.HasOne("zyx.lsyyy.Verification.Data.Action", "Action")
                         .WithMany()
-                        .HasForeignKey("ActionId")
+                        .HasForeignKey("ActionTagId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -196,7 +196,7 @@ namespace xyz.lsyyy.Verification.Data.Migrations
                 {
                     b.HasOne("zyx.lsyyy.Verification.Data.Action", "Action")
                         .WithMany()
-                        .HasForeignKey("ActionId")
+                        .HasForeignKey("ActionTagId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
