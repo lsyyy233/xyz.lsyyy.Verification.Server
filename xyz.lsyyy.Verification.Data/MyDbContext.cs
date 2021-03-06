@@ -34,7 +34,6 @@ namespace xyz.lsyyy.Verification.Data
 			modelBuilder.Entity<UserActionMap>().HasNoKey();
 			modelBuilder.Entity<UserActionMap>().HasIndex(x => x.UserId);
 			modelBuilder.Entity<UserActionMap>().HasIndex(x => x.ActionTagId);
-			base.OnModelCreating(modelBuilder);
 		}
 	}
 }

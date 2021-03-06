@@ -9,8 +9,8 @@ using xyz.lsyyy.Verification.Data;
 namespace xyz.lsyyy.Verification.Data.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20210222130247_Add_SuperiorPosition")]
-    partial class Add_SuperiorPosition
+    [Migration("20210302063834_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -19,11 +19,11 @@ namespace xyz.lsyyy.Verification.Data.Migrations
                 .HasAnnotation("ProductVersion", "3.1.12")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("xyz.lsyyy.Verification.Data.Action", b =>
+            modelBuilder.Entity("xyz.lsyyy.Verification.Data.ActionTag", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasColumnType("int");
 
                     b.Property<string>("ActionName")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -31,22 +31,25 @@ namespace xyz.lsyyy.Verification.Data.Migrations
                     b.Property<string>("ControllerName")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
+                    b.Property<string>("TagName")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Actions");
+                    b.ToTable("ActionTags");
                 });
 
             modelBuilder.Entity("xyz.lsyyy.Verification.Data.Department", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<Guid?>("SuperiorDepartmentId")
-                        .HasColumnType("char(36)");
+                    b.Property<int?>("SuperiorDepartmentId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -57,11 +60,11 @@ namespace xyz.lsyyy.Verification.Data.Migrations
 
             modelBuilder.Entity("xyz.lsyyy.Verification.Data.DepartmentActionMap", b =>
                 {
-                    b.Property<Guid>("ActionTagId")
-                        .HasColumnType("char(36)");
+                    b.Property<int>("ActionTagId")
+                        .HasColumnType("int");
 
-                    b.Property<Guid>("DepartmentId")
-                        .HasColumnType("char(36)");
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
 
                     b.HasIndex("ActionTagId");
 
@@ -72,18 +75,18 @@ namespace xyz.lsyyy.Verification.Data.Migrations
 
             modelBuilder.Entity("xyz.lsyyy.Verification.Data.Position", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasColumnType("int");
 
-                    b.Property<Guid>("DepartmentId")
-                        .HasColumnType("char(36)");
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<Guid?>("SuperiorPositionId")
-                        .HasColumnType("char(36)");
+                    b.Property<int?>("SuperiorPositionId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -96,11 +99,11 @@ namespace xyz.lsyyy.Verification.Data.Migrations
 
             modelBuilder.Entity("xyz.lsyyy.Verification.Data.PositionActionMap", b =>
                 {
-                    b.Property<Guid>("ActionTagId")
-                        .HasColumnType("char(36)");
+                    b.Property<int>("ActionTagId")
+                        .HasColumnType("int");
 
-                    b.Property<Guid>("PositionId")
-                        .HasColumnType("char(36)");
+                    b.Property<int>("PositionId")
+                        .HasColumnType("int");
 
                     b.HasIndex("ActionTagId");
 
@@ -111,9 +114,9 @@ namespace xyz.lsyyy.Verification.Data.Migrations
 
             modelBuilder.Entity("xyz.lsyyy.Verification.Data.User", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -121,8 +124,8 @@ namespace xyz.lsyyy.Verification.Data.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<Guid>("PositionId")
-                        .HasColumnType("char(36)");
+                    b.Property<int?>("PositionId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -133,11 +136,14 @@ namespace xyz.lsyyy.Verification.Data.Migrations
 
             modelBuilder.Entity("xyz.lsyyy.Verification.Data.UserActionMap", b =>
                 {
-                    b.Property<Guid>("ActionTagId")
-                        .HasColumnType("char(36)");
+                    b.Property<int>("AccessType")
+                        .HasColumnType("int");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("char(36)");
+                    b.Property<int>("ActionTagId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasIndex("ActionTagId");
 
@@ -155,7 +161,7 @@ namespace xyz.lsyyy.Verification.Data.Migrations
 
             modelBuilder.Entity("xyz.lsyyy.Verification.Data.DepartmentActionMap", b =>
                 {
-                    b.HasOne("xyz.lsyyy.Verification.Data.Action", "Action")
+                    b.HasOne("xyz.lsyyy.Verification.Data.ActionTag", "ActionTag")
                         .WithMany()
                         .HasForeignKey("ActionTagId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -183,7 +189,7 @@ namespace xyz.lsyyy.Verification.Data.Migrations
 
             modelBuilder.Entity("xyz.lsyyy.Verification.Data.PositionActionMap", b =>
                 {
-                    b.HasOne("xyz.lsyyy.Verification.Data.Action", "Action")
+                    b.HasOne("xyz.lsyyy.Verification.Data.ActionTag", "ActionTag")
                         .WithMany()
                         .HasForeignKey("ActionTagId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -200,14 +206,12 @@ namespace xyz.lsyyy.Verification.Data.Migrations
                 {
                     b.HasOne("xyz.lsyyy.Verification.Data.Position", "Position")
                         .WithMany()
-                        .HasForeignKey("PositionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PositionId");
                 });
 
             modelBuilder.Entity("xyz.lsyyy.Verification.Data.UserActionMap", b =>
                 {
-                    b.HasOne("xyz.lsyyy.Verification.Data.Action", "Action")
+                    b.HasOne("xyz.lsyyy.Verification.Data.ActionTag", "ActionTag")
                         .WithMany()
                         .HasForeignKey("ActionTagId")
                         .OnDelete(DeleteBehavior.Cascade)

@@ -1,10 +1,8 @@
-﻿using System;
-
-namespace xyz.lsyyy.Verification.Data
+﻿namespace xyz.lsyyy.Verification.Data
 {
 	public class BaseMap
 	{
-		public Guid ActionTagId { get; set; }
+		public int ActionTagId { get; set; }
 
 		public virtual ActionTag ActionTag { get; set; }
 	}

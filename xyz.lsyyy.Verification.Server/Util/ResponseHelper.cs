@@ -1,4 +1,5 @@
-﻿using xyz.lsyyy.Verification.Protos;
+﻿using System;
+using xyz.lsyyy.Verification.Protos;
 
 namespace xyz.lsyyy.Verification.Util
 {
@@ -10,7 +11,7 @@ namespace xyz.lsyyy.Verification.Util
 		/// <param name="message"></param>
 		/// <param name="isSuccess"></param>
 		/// <returns></returns>
-		public static GeneralResponse Response(bool isSuccess = true, string message = "")
+		private static GeneralResponse Response(bool isSuccess, string message)
 		{
 			if (isSuccess)
 			{
@@ -22,5 +23,16 @@ namespace xyz.lsyyy.Verification.Util
 				Message = message
 			};
 		}
+
+		public static GeneralResponse OkResponse()
+		{
+			return Response(true,String.Empty);
+		}
+
+		public static GeneralResponse BadResponse(string message = "未知错误")
+		{
+			return Response(false, message);
+		}
+
 	}
 }

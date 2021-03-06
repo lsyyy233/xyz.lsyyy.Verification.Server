@@ -10,7 +10,7 @@ namespace xyz.lsyyy.Verification.Data
 		/// <summary>
 		/// 用户Id
 		/// </summary>
-		public Guid Id { get; set; }
+		public int Id { get; set; }
 
 		/// <summary>
 		/// 用户名
@@ -20,7 +20,7 @@ namespace xyz.lsyyy.Verification.Data
 		/// <summary>
 		/// 所属职位Id
 		/// </summary>
-		public Guid? PositionId { get; set; }
+		public int? PositionId { get; set; }
 
 		/// <summary>
 		/// 所属职位

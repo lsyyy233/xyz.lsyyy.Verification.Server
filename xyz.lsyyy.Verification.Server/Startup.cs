@@ -1,5 +1,3 @@
-using System;
-using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -9,11 +7,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
-using xyz.lsyyy.Verification;
+using StackExchange.Redis;
+using System;
+using System.IO;
 using xyz.lsyyy.Verification.Data;
 using xyz.lsyyy.Verification.Services;
 
-namespace xyz.lsyyyVerification
+namespace xyz.lsyyy.Verification
 {
 	public class Startup
 	{
@@ -24,6 +24,18 @@ namespace xyz.lsyyyVerification
 		}
 		public void ConfigureServices(IServiceCollection services)
 		{
+			ConfigurationOptions configurationOptions = new ConfigurationOptions
+			{
+				EndPoints = {"192.168.202.128:6379"},
+				Password = "qwerty123456"
+			};
+			services.AddScoped<TokenService>();
+			services.AddDistributedMemoryCache();
+			services.AddStackExchangeRedisCache(option =>
+			{
+				
+				option.ConfigurationOptions = configurationOptions;
+			});
 			services.AddRouting(x =>
 			{
 				x.LowercaseQueryStrings = true;
@@ -40,9 +52,6 @@ namespace xyz.lsyyyVerification
 					.UseLazyLoadingProxies()
 					.UseMySql(Configuration.GetConnectionString("DefaultDataBase"));
 			});
-			services
-				.AddSingleton<MemoryActionTagService>()
-				.AddScoped<ActionTagService>();
 			services.AddLogging();
 			services.AddGrpc();
 			services.AddSwaggerGen(option =>
@@ -90,10 +99,11 @@ namespace xyz.lsyyyVerification
 
 			app.UseEndpoints(endpoints =>
 			{
-				endpoints.MapGrpcService<GrpcUserService>();
-				endpoints.MapGrpcService<VerificationService>();
 				endpoints.MapGrpcService<GrpcActionService>();
-				endpoints.MapControllers();
+				endpoints.MapGrpcService<GrpcDepartmentService>();
+				endpoints.MapGrpcService<GrpcPositionService>();
+				endpoints.MapGrpcService<GrpcUserService>();
+				endpoints.MapGrpcService<GrpcVerificationService>();
 			});
 		}
 	}

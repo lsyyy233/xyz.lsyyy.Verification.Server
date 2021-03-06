@@ -22,13 +22,17 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="3.1.12" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="NLog" Version="4.7.7" />
     <PackageReference Include="NLog.Extensions.Logging" Version="1.7.0" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.2.4" />
+    <PackageReference Include="StackExchange.Redis.Extensions.AspNetCore" Version="6.3.6" />
+    <PackageReference Include="StackExchange.Redis.Extensions.Core" Version="6.3.6" />
+    <PackageReference Include="StackExchange.Redis.Extensions.Newtonsoft" Version="6.3.6" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.0.7" />
-    <PackageReference Include="xyz.lsyyy.Verification.Protos" Version="0.3.1" />
-    <PackageReference Include="xyz.lsyyy.Verification.Util" Version="0.0.5" />
+    <PackageReference Include="xyz.lsyyy.Verification.Protos" Version="0.5.7" />
+    <PackageReference Include="xyz.lsyyy.Verification.Util" Version="0.0.6" />
   </ItemGroup>
 
   <ItemGroup>

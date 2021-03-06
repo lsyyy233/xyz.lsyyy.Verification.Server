@@ -19,9 +19,9 @@ namespace xyz.lsyyy.Verification.Data.Migrations
 
             modelBuilder.Entity("xyz.lsyyy.Verification.Data.ActionTag", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasColumnType("int");
 
                     b.Property<string>("ActionName")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -39,15 +39,15 @@ namespace xyz.lsyyy.Verification.Data.Migrations
 
             modelBuilder.Entity("xyz.lsyyy.Verification.Data.Department", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<Guid?>("SuperiorDepartmentId")
-                        .HasColumnType("char(36)");
+                    b.Property<int?>("SuperiorDepartmentId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -58,11 +58,11 @@ namespace xyz.lsyyy.Verification.Data.Migrations
 
             modelBuilder.Entity("xyz.lsyyy.Verification.Data.DepartmentActionMap", b =>
                 {
-                    b.Property<Guid>("ActionTagId")
-                        .HasColumnType("char(36)");
+                    b.Property<int>("ActionTagId")
+                        .HasColumnType("int");
 
-                    b.Property<Guid>("DepartmentId")
-                        .HasColumnType("char(36)");
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
 
                     b.HasIndex("ActionTagId");
 
@@ -73,18 +73,18 @@ namespace xyz.lsyyy.Verification.Data.Migrations
 
             modelBuilder.Entity("xyz.lsyyy.Verification.Data.Position", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasColumnType("int");
 
-                    b.Property<Guid>("DepartmentId")
-                        .HasColumnType("char(36)");
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<Guid?>("SuperiorPositionId")
-                        .HasColumnType("char(36)");
+                    b.Property<int?>("SuperiorPositionId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -97,11 +97,11 @@ namespace xyz.lsyyy.Verification.Data.Migrations
 
             modelBuilder.Entity("xyz.lsyyy.Verification.Data.PositionActionMap", b =>
                 {
-                    b.Property<Guid>("ActionTagId")
-                        .HasColumnType("char(36)");
+                    b.Property<int>("ActionTagId")
+                        .HasColumnType("int");
 
-                    b.Property<Guid>("PositionId")
-                        .HasColumnType("char(36)");
+                    b.Property<int>("PositionId")
+                        .HasColumnType("int");
 
                     b.HasIndex("ActionTagId");
 
@@ -112,9 +112,9 @@ namespace xyz.lsyyy.Verification.Data.Migrations
 
             modelBuilder.Entity("xyz.lsyyy.Verification.Data.User", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -122,8 +122,8 @@ namespace xyz.lsyyy.Verification.Data.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<Guid?>("PositionId")
-                        .HasColumnType("char(36)");
+                    b.Property<int?>("PositionId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -137,11 +137,11 @@ namespace xyz.lsyyy.Verification.Data.Migrations
                     b.Property<int>("AccessType")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("ActionTagId")
-                        .HasColumnType("char(36)");
+                    b.Property<int>("ActionTagId")
+                        .HasColumnType("int");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("char(36)");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasIndex("ActionTagId");
 

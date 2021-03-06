@@ -7,7 +7,7 @@ namespace xyz.lsyyy.Verification.Data
 		/// <summary>
 		/// 部门Id
 		/// </summary>
-		public Guid Id { get; set; }
+		public int Id { get; set; }
 
 		/// <summary>
 		/// 部门名称
@@ -17,7 +17,7 @@ namespace xyz.lsyyy.Verification.Data
 		/// <summary>
 		/// 上级部门Id
 		/// </summary>
-		public Guid? SuperiorDepartmentId { get; set; }
+		public int? SuperiorDepartmentId { get; set; }
 
 		/// <summary>
 		/// 上级部门

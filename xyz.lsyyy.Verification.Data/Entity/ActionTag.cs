@@ -7,7 +7,7 @@ namespace xyz.lsyyy.Verification.Data
 	/// </summary>
 	public class ActionTag
 	{
-		public Guid Id { get; set; }
+		public int Id { get; set; }
 
 		public string ControllerName { get; set; }
 

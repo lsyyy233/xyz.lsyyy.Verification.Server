@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 using NLog;
 using NLog.Extensions.Logging;
 
-namespace xyz.lsyyyVerification
+namespace xyz.lsyyy.Verification
 {
 	public class Program
 	{

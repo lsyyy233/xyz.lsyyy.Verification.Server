@@ -1,8 +1,8 @@
 ﻿using Grpc.Core;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Threading.Tasks;
 using xyz.lsyyy.Verification.Data;
+using xyz.lsyyy.Verification.Model;
 using xyz.lsyyy.Verification.Protos;
 using xyz.lsyyy.Verification.Util;
 
@@ -11,27 +11,33 @@ namespace xyz.lsyyy.Verification
 	/// <summary>
 	/// GRPC服务端
 	/// </summary>
-	public class GrpcUserService : Protos.UserRpcService.UserRpcServiceBase
+	public class GrpcUserService : UserRpcService.UserRpcServiceBase
 	{
 		private readonly MyDbContext db;
-		public GrpcUserService(MyDbContext db)
+		private readonly TokenService tokenService;
+
+		public GrpcUserService(MyDbContext db, TokenService tokenService)
 		{
 			this.db = db;
+			this.tokenService = tokenService;
 		}
 
-		public override async Task<GetUserResponse> GetUser(GeneralIdRequest request, ServerCallContext context)
+		public override async Task<GetUserResponse> GetCurrentUser(GetUserRequesr request, ServerCallContext context)
 		{
-			Guid.TryParse(request.Id, out Guid userId);
-			User user = await db.Users.FirstOrDefaultAsync(x => x.Id == userId);
-			return new GetUserResponse
+			GetUserIdByTokenResult result = await tokenService.GetUserIdByTokenAsync(request.Token);
+			GetUserResponse response = new GetUserResponse();
+			if (result.Exist)
 			{
-				Id = user?.Id.ToString() ?? string.Empty,
-				Name = user?.Name ?? string.Empty,
-				PositionId = user == null
-					? string.Empty
-					: user.PositionId.HasValue ? string.Empty : user.PositionId.ToString()
+				User user = await db.Users.FirstOrDefaultAsync(x => x.Id == result.UserId);
+				if (user != null)
+				{
+					response.Id = user.Id;
+					response.Name = user.Name;
+					response.DepartmentId = user.PositionId ?? -1;
+				}
 
-			};
+			}
+			return response;
 		}
 
 		public override async Task<GeneralResponse> RegistAdminUser(RegistAdminUserRequest request, ServerCallContext context)
@@ -47,13 +53,8 @@ namespace xyz.lsyyy.Verification
 			}
 			else
 			{
-				//用户Id不合法
-				if (!Guid.TryParse(request.CurrentUserId, out Guid userId))
-				{
-					return ResponseHelper.Response(false, "需要管理员用户");
-				}
 				//已登录的用户不是管理员用户
-				if (await db.Users.AnyAsync(x => x.Id == userId && x.PositionId == null))
+				if (await db.Users.AnyAsync(x => x.Id == request.CurrentUserId && x.PositionId == null))
 				{
 					await db.Users.AddAsync(new User
 					{
@@ -63,21 +64,21 @@ namespace xyz.lsyyy.Verification
 				}
 				else
 				{
-					return ResponseHelper.Response(false, "需要管理员用户");
+					return ResponseHelper.BadResponse("需要管理员用户");
 				}
 
 				if (await db.Users.AnyAsync(x => x.Name == request.UserName))
 				{
-					return ResponseHelper.Response(false, "用户名已存在");
+					return ResponseHelper.BadResponse("用户名已存在");
 				}
 
 			}
 
 			if (await db.SaveChangesAsync() > 0)
 			{
-				return ResponseHelper.Response();
+				return ResponseHelper.OkResponse();
 			}
-			return ResponseHelper.Response(false);
+			return ResponseHelper.BadResponse();
 		}
 
 		/// <summary>
@@ -93,15 +94,11 @@ namespace xyz.lsyyy.Verification
 					x.Name == request.UserName && x.Password == HashHelper.GetSha256WithSalt(request.Password));
 			if (user != null)
 			{
+				string token = await tokenService.AddToken(user.Id);
 				return new UserLoginResponse
 				{
 					IsSuccess = true,
-					UserInfo = new UserInfo()
-					{
-						Id = user.Id.ToString(),
-						Name = user.Name,
-						PositionId = user.PositionId.ToString()
-					}
+					Token = token
 				};
 			}
 			return new UserLoginResponse
@@ -118,30 +115,29 @@ namespace xyz.lsyyy.Verification
 		/// <returns></returns>
 		public override async Task<GeneralResponse> RegistUser(RegistUserRequest request, ServerCallContext context)
 		{
-			Guid PositionId = Guid.Parse(request.PositionId);
-			if (!await db.Positions.AnyAsync(x => x.Id == PositionId))
+			if (!await db.Positions.AnyAsync(x => x.Id == request.PositionId))
 			{
-				return ResponseHelper.Response(false, "指定的职位不存在");
+				return ResponseHelper.BadResponse("指定的职位不存在");
 			}
 			if (string.IsNullOrWhiteSpace(request.Name))
 			{
-				return ResponseHelper.Response(false, "用户名不能为空");
+				return ResponseHelper.BadResponse("用户名不能为空");
 			}
 			if (await db.Users.AnyAsync(x => x.Name == request.Name))
 			{
-				return ResponseHelper.Response(false, "用户名已存在");
+				return ResponseHelper.BadResponse("用户名已存在");
 			}
 			await db.Users.AddAsync(
 				new User
 				{
 					Name = request.Name,
-					PositionId = PositionId,
+					PositionId = request.PositionId,
 					Password = request.Password
 				});
 			int result = await db.SaveChangesAsync();
 			if (result <= 0)
 			{
-				return ResponseHelper.Response(false, "未知错误");
+				return ResponseHelper.BadResponse();
 			}
 			return new GeneralResponse
 			{

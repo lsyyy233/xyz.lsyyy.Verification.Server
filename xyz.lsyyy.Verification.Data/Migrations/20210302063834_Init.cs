@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace xyz.lsyyy.Verification.Data.Migrations
@@ -8,24 +8,28 @@ namespace xyz.lsyyy.Verification.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Actions",
+                name: "ActionTags",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(nullable: true)
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    ControllerName = table.Column<string>(nullable: true),
+                    ActionName = table.Column<string>(nullable: true),
+                    TagName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Actions", x => x.Id);
+                    table.PrimaryKey("PK_ActionTags", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Departments",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
-                    SuperiorDepartmentId = table.Column<Guid>(nullable: true)
+                    SuperiorDepartmentId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -42,15 +46,15 @@ namespace xyz.lsyyy.Verification.Data.Migrations
                 name: "DepartmentActionMaps",
                 columns: table => new
                 {
-                    ActionId = table.Column<Guid>(nullable: false),
-                    DepartmentId = table.Column<Guid>(nullable: false)
+                    ActionTagId = table.Column<int>(nullable: false),
+                    DepartmentId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.ForeignKey(
-                        name: "FK_DepartmentActionMaps_Actions_ActionId",
-                        column: x => x.ActionId,
-                        principalTable: "Actions",
+                        name: "FK_DepartmentActionMaps_ActionTags_ActionTagId",
+                        column: x => x.ActionTagId,
+                        principalTable: "ActionTags",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -65,8 +69,10 @@ namespace xyz.lsyyy.Verification.Data.Migrations
                 name: "Positions",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
-                    DepartmentId = table.Column<Guid>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    DepartmentId = table.Column<int>(nullable: false),
+                    SuperiorPositionId = table.Column<int>(nullable: true),
                     Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -78,21 +84,27 @@ namespace xyz.lsyyy.Verification.Data.Migrations
                         principalTable: "Departments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Positions_Positions_SuperiorPositionId",
+                        column: x => x.SuperiorPositionId,
+                        principalTable: "Positions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
                 name: "PositionActionMaps",
                 columns: table => new
                 {
-                    ActionId = table.Column<Guid>(nullable: false),
-                    PositionId = table.Column<Guid>(nullable: false)
+                    ActionTagId = table.Column<int>(nullable: false),
+                    PositionId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.ForeignKey(
-                        name: "FK_PositionActionMaps_Actions_ActionId",
-                        column: x => x.ActionId,
-                        principalTable: "Actions",
+                        name: "FK_PositionActionMaps_ActionTags_ActionTagId",
+                        column: x => x.ActionTagId,
+                        principalTable: "ActionTags",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -107,9 +119,11 @@ namespace xyz.lsyyy.Verification.Data.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
-                    PositionId = table.Column<Guid>(nullable: false)
+                    PositionId = table.Column<int>(nullable: true),
+                    Password = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -119,22 +133,23 @@ namespace xyz.lsyyy.Verification.Data.Migrations
                         column: x => x.PositionId,
                         principalTable: "Positions",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
                 name: "UserActionMaps",
                 columns: table => new
                 {
-                    ActionId = table.Column<Guid>(nullable: false),
-                    UserId = table.Column<Guid>(nullable: false)
+                    ActionTagId = table.Column<int>(nullable: false),
+                    UserId = table.Column<int>(nullable: false),
+                    AccessType = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.ForeignKey(
-                        name: "FK_UserActionMaps_Actions_ActionId",
-                        column: x => x.ActionId,
-                        principalTable: "Actions",
+                        name: "FK_UserActionMaps_ActionTags_ActionTagId",
+                        column: x => x.ActionTagId,
+                        principalTable: "ActionTags",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -146,7 +161,7 @@ namespace xyz.lsyyy.Verification.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_DepartmentActionMaps_ActionId",
+                name: "IX_DepartmentActionMaps_ActionTagId",
                 table: "DepartmentActionMaps",
                 column: "ActionTagId");
 
@@ -161,7 +176,7 @@ namespace xyz.lsyyy.Verification.Data.Migrations
                 column: "SuperiorDepartmentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PositionActionMaps_ActionId",
+                name: "IX_PositionActionMaps_ActionTagId",
                 table: "PositionActionMaps",
                 column: "ActionTagId");
 
@@ -176,7 +191,12 @@ namespace xyz.lsyyy.Verification.Data.Migrations
                 column: "DepartmentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserActionMaps_ActionId",
+                name: "IX_Positions_SuperiorPositionId",
+                table: "Positions",
+                column: "SuperiorPositionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserActionMaps_ActionTagId",
                 table: "UserActionMaps",
                 column: "ActionTagId");
 
@@ -203,7 +223,7 @@ namespace xyz.lsyyy.Verification.Data.Migrations
                 name: "UserActionMaps");
 
             migrationBuilder.DropTable(
-                name: "Actions");
+                name: "ActionTags");
 
             migrationBuilder.DropTable(
                 name: "Users");
